@@ -2,8 +2,6 @@
 
 
 import subprocess as SP
-from sys import argv
-from sys import exit
 import os
 
 
@@ -18,13 +16,13 @@ def __main__(argv):
 	# print(f"argv |{argv}|{C.NEWLINE}")
 	C.OPTIONSDICT[C.ROOTDIR] = FO.ABSPATH(C.OPTIONSDICT[C.ROOTDIR])
 	print(f"C.OPTIONSDICT |{C.OPTIONSDICT}|{C.NEWLINE}")
-	# C.OPTIONSDICT[C.ROOTDIR] = FO.fxDir(C.OPTIONSDICT[C.ROOTDIR])
+	C.OPTIONSDICT[C.ROOTDIR] = FO.fxDir(C.OPTIONSDICT[C.ROOTDIR])
 	print(f"C.OPTIONSDICT |{C.OPTIONSDICT}|{C.NEWLINE}")
 	if C.OPTIONSDICT[C.ROOTDIR] is None:
 		C.doError(f"illegal directory selected{C.NEWLINE}argv |{argv}|{C.NEWLINE}")
-		exit(-1)
+		C.exit(-1)
 	dirList_ = FO.scanADir(C.OPTIONSDICT[C.ROOTDIR], C.OPTIONSDICT[FO.RECURSE])
-	with open("__UNRENAME__.zsh", "tw") as FDOut:
+	with open(f"{C.OPTIONSDICT[C.ROOTDIR]}__UNRENAME__.zsh", "tw") as FDOut:
 		for thisEntry_ in dirList_:
 			if thisEntry_[FO.ISMEDIAFILETYPE] is True and C.OPTIONSDICT[FO.MEDIAFILES] is True:
 				hashedName_ = C.doAHash(C.OPTIONSDICT[C.HASHER], f"{thisEntry_[FO.PATH]}")
@@ -53,7 +51,7 @@ def __main__(argv):
 
 
 if __name__ == "__main__":
-	__main__(argv)
+	__main__(C.argv)
 
 
 #
